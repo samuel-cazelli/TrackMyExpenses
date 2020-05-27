@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "track-my-expenses-3756a": {
+      "hosting": {
+        "track-my-expenses": [
+          "track-my-expenses-3756a"
+        ]
+      }
+    }
+  }
+}

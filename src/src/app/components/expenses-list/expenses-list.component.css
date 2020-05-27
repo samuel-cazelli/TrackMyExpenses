@@ -1,0 +1,57 @@
+.navigate-controls{
+    display: flex;
+    margin-bottom: 20px;
+}
+.navigate-controls div{
+    flex-grow: 2;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.mat-spinner{
+    margin: 0 auto;
+}
+.expense-group-item{
+    display: flex;
+    margin-top: 20px;
+    flex-flow: row wrap;
+    border-bottom: 1px solid #efefef;
+}
+.expense-group-icon{
+    font-size: 36px;
+    padding: 3px;
+}
+.expense-group-name{
+    padding: 10px;
+    font-size: 18px;
+}
+.expense-group-value{
+    padding: 10px;
+    margin-left: auto;
+    font-size: 18px;
+}
+
+
+.expense-details{
+    width: 100%;
+    padding-left: 10px;
+}
+.expense-details-name{
+    padding-left: 10px;
+}
+.expense-details-item{
+    display: flex;
+    font-size: 14px;
+    margin-top: 5px;
+    padding: 5px;
+}
+.expense-details-value{
+    margin-left: auto;
+}
+
+
+.no-spendings{
+    display: flex;
+    justify-content: center;
+}

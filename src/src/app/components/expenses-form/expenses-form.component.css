@@ -1,0 +1,21 @@
+mat-form-field {
+    width: 100%;
+}
+
+.category-field-container{
+  display: flex;
+  
+}
+.category-form-field{
+  width: 80%;
+}
+.category-add-button{
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.save-button{
+ float: right;
+}

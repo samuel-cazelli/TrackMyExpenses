@@ -1,0 +1,30 @@
+<div class="navigate-controls">
+    <button mat-raised-button class="save-button" (click)="setNextCurrentDate(-1)">
+        <mat-icon>navigate_before</mat-icon>
+    </button>
+    <div>
+        {{currentDate | date:'yyyy/MM' }}
+    </div>
+    <button mat-raised-button class="save-button" (click)="setNextCurrentDate(+1)">
+        <mat-icon>navigate_next</mat-icon>
+    </button>
+</div>
+<mat-spinner *ngIf="loadinData" diameter="30"></mat-spinner>
+<div *ngIf="!loadinData && groupedCategories && groupedCategories.length > 0">
+    <div *ngFor="let category of groupedCategories">
+        <div class="expense-group-item">
+            <span class="expense-group-name">{{ category.value.name }}</span>
+            <span class="expense-group-value">{{ category.value.amount }}</span>
+            <div class="expense-details">
+                <div class="expense-details-item" *ngFor="let expense of category.value.expenses">
+                    <span class="expense-details-date">{{ expense.value.date | date:'yyyy/MM/dd'}}</span>
+                    <span class="expense-details-name">{{ expense.value.description }}</span>
+                    <span class="expense-details-value">{{ expense.value.amount }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!loadinData  && (!groupedCategories || groupedCategories.length === 0)" class="no-spendings">
+    <div>No spendings</div>
+</div>
