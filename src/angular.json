@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "track-my-expenses"
+  "defaultProject": "track-my-expenses",
+  "cli": {
+    "defaultCollection": "@nativescript/schematics"
+  }
 }

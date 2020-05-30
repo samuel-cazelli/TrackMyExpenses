@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ExpensesListComponent } from './components/expenses-list/expenses-list.component';
-import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
+import { ExpensesListComponent } from '@src/app/components/expenses-list/expenses-list.component';
+import { ExpensesFormComponent } from '@src/app/components/expenses-form/expenses-form.component';
 
 
 const routes: Routes = [
