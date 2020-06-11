@@ -17,9 +17,12 @@
     margin-top: 20px;
     flex-flow: row wrap;
     border-bottom: 1px solid #efefef;
+    cursor: pointer;
 }
 .expense-group-icon{
     font-size: 36px;
+    height: 36px;
+    width: 36px;
     padding: 3px;
 }
 .expense-group-name{

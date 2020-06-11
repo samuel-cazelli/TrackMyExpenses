@@ -3,7 +3,8 @@
         <mat-icon>navigate_before</mat-icon>
     </button>
     <div>
-        {{currentDate | date:'yyyy/MM' }}
+        {{currentDate | date:'MMMM' }}<br />
+        {{currentDate | date:'yyyy' }}
     </div>
     <button mat-raised-button class="save-button" (click)="setNextCurrentDate(+1)">
         <mat-icon>navigate_next</mat-icon>
@@ -12,14 +13,16 @@
 <mat-spinner *ngIf="loadinData" diameter="30"></mat-spinner>
 <div *ngIf="!loadinData && groupedCategories && groupedCategories.length > 0">
     <div *ngFor="let category of groupedCategories">
-        <div class="expense-group-item">
+        <div class="expense-group-item" (click)="category.value.visible = !category.value.visible">
+            <mat-icon class="expense-group-icon" [@visibleExpenses]="category.value.visible ? 'visible' : 'hidden'">
+                keyboard_arrow_right</mat-icon>
             <span class="expense-group-name">{{ category.value.name }}</span>
-            <span class="expense-group-value">{{ category.value.amount }}</span>
-            <div class="expense-details">
+            <span class="expense-group-value">{{ category.value.amount | currency }}</span>
+            <div class="expense-details" *ngIf="category.value.visible" [@showHide]>
                 <div class="expense-details-item" *ngFor="let expense of category.value.expenses">
                     <span class="expense-details-date">{{ expense.value.date | date:'yyyy/MM/dd'}}</span>
                     <span class="expense-details-name">{{ expense.value.description }}</span>
-                    <span class="expense-details-value">{{ expense.value.amount }}</span>
+                    <span class="expense-details-value">{{ expense.value.amount | currency }}</span>
                 </div>
             </div>
         </div>

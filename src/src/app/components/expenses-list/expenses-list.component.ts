@@ -7,11 +7,35 @@ import { take } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
 import { KeyValue } from '@angular/common';
+import { trigger, state, transition, animate, style } from '@angular/animations';
 
 @Component({
   selector: 'app-expenses-list',
   templateUrl: './expenses-list.component.html',
-  styleUrls: ['./expenses-list.component.css']
+  styleUrls: ['./expenses-list.component.css'],
+  animations: [
+    trigger('showHide', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.2s', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('0.2s', style({ opacity: 0, height: 0 }))
+      ]),
+    ]),
+    trigger('visibleExpenses',
+      [
+        state('hidden', style({ transform: 'none' })),
+        state('visible', style({ transform: 'rotate(90deg)' })),
+        transition('hidden => visible', [
+          animate('0.2s')
+        ]),
+        transition('visible => hidden', [
+          animate('0.2s')
+        ])
+      ])
+  ],
 })
 export class ExpensesListComponent implements OnInit {
 
@@ -21,7 +45,7 @@ export class ExpensesListComponent implements OnInit {
 
   allCategories: Array<KeyValue<string, Category>>;
 
-  groupedCategories: Array<KeyValue<string, { name: string; amount: number; expenses: {} }>>;
+  groupedCategories: Array<KeyValue<string, { name: string; amount: number; expenses: {}; visible: boolean }>>;
 
   expenses: Array<KeyValue<string, Expense>>;
 
@@ -82,7 +106,8 @@ export class ExpensesListComponent implements OnInit {
             amount: expensesByAmount.reduce((sum, currentExpense) => {
               return (sum + currentExpense.value.amount);
             }, 0),
-            expenses: expensesByAmount
+            expenses: expensesByAmount,
+            visible: false
           }
         });
       }
@@ -98,7 +123,7 @@ export class ExpensesListComponent implements OnInit {
     if (!date) {
       date = this.currentDate;
     }
-    this.groupedCategories = new Array<KeyValue<string, { name: string; amount: number; expenses: {} }>>();
+    this.groupedCategories = new Array<KeyValue<string, { name: string; amount: number; expenses: {}, visible: boolean }>>();
     this.currentDate = this.calculatePeriodOffset(date, offset);
     if (this.allCategories) {
       this.getExpensesList();
@@ -109,5 +134,6 @@ export class ExpensesListComponent implements OnInit {
   calculatePeriodOffset(date: Date, offset: number) {
     return new Date(date.getFullYear(), date.getMonth() + offset, 1);
   }
+
 
 }
