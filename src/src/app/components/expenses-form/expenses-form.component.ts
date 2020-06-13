@@ -35,10 +35,10 @@ export class ExpensesFormComponent implements OnInit {
     this.expense = {
       key: '',
       value: {
-        date: new Date(),
+        date: null,
         description: '',
         categoryKey: '',
-        amount: 0
+        amount: null
       }
     };
 
