@@ -1,17 +1,19 @@
 <div class="navigate-controls">
-    <button mat-raised-button class="save-button" (click)="setNextCurrentDate(-1)">
+    <button mat-raised-button (click)="setNextCurrentDate(-1)">
         <mat-icon>navigate_before</mat-icon>
     </button>
     <div>
         {{currentDate | date:'MMMM' }}<br />
-        {{currentDate | date:'yyyy' }}
+        {{currentDate | date:'yyyy' }}<br />
     </div>
-    <button mat-raised-button class="save-button" (click)="setNextCurrentDate(+1)">
+    <button mat-raised-button (click)="setNextCurrentDate(+1)">
         <mat-icon>navigate_next</mat-icon>
     </button>
 </div>
+
 <mat-spinner *ngIf="loadinData" diameter="30"></mat-spinner>
 <div *ngIf="!loadinData && groupedCategories && groupedCategories.length > 0">
+    <div class="mat-card-title total">{{ expenses | sumexpenses | currency }}</div>
     <div *ngFor="let category of groupedCategories">
         <div class="expense-group-item" (click)="category.value.visible = !category.value.visible">
             <mat-icon class="expense-group-icon" [@visibleExpenses]="category.value.visible ? 'visible' : 'hidden'">
@@ -19,7 +21,8 @@
             <span class="expense-group-name">{{ category.value.name }}</span>
             <span class="expense-group-value">{{ category.value.amount | currency }}</span>
             <div class="expense-details" *ngIf="category.value.visible" [@showHide]>
-                <div class="expense-details-item" *ngFor="let expense of category.value.expenses" (click)="clickEditExpense(expense.key)">
+                <div class="expense-details-item" *ngFor="let expense of category.value.expenses"
+                    (click)="clickEditExpense(expense.key)">
                     <span class="expense-details-value">{{ expense.value.amount | currency }}</span>
                     <span class="expense-details-name">{{ expense.value.description }}</span>
                     <span class="expense-details-date">{{ expense.value.date | date:'dd MMM'}}</span>

@@ -29,6 +29,7 @@ import { AppComponent } from './app.component';
 import { CategoriesFormComponent } from './components/categories-form/categories-form.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { ExpensesListComponent } from './components/expenses-list/expenses-list.component';
+import { SumExpensesPipe } from './pipes/sum-expenses.pipe';
 
 
 
@@ -37,7 +38,8 @@ import { ExpensesListComponent } from './components/expenses-list/expenses-list.
     AppComponent,
     ExpensesListComponent,
     ExpensesFormComponent,
-    CategoriesFormComponent
+    CategoriesFormComponent,
+    SumExpensesPipe
   ],
   imports: [
     BrowserModule,
