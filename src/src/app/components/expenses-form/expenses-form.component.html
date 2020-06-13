@@ -1,40 +1,42 @@
-<mat-card-header>
-  <mat-card-title>Add expense</mat-card-title>
+<mat-spinner *ngIf="loadingData" diameter="30"></mat-spinner>
+<mat-card-header *ngIf="!loadingData">
+  <mat-card-title>{{ !(expense?.key && expense.key != '') ? 'Add expense' : 'Edit expense' }}</mat-card-title>
 </mat-card-header>
-<form (ngSubmit)="expensesForm.valid && onSubmit(expensesForm)" #expensesForm="ngForm">
+<form (ngSubmit)="expensesForm.valid && onSubmit(expensesForm)" #expensesForm="ngForm" *ngIf="!loadingData">
   <mat-form-field appearance="outline">
     <mat-label>Date</mat-label>
-    <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="expense.value.date" name="date" required>
+    <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="expense?.value.date" name="date" required>
     <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
     <mat-datepicker #myDatepicker></mat-datepicker>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Description</mat-label>
-    <input matInput placeholder="Placeholder" [(ngModel)]="expense.value.description" name="description">
+    <input matInput placeholder="Placeholder" [(ngModel)]="expense?.value.description" name="description">
   </mat-form-field>
   <div class="category-field-container">
     <mat-form-field appearance="outline" class="category-form-field">
       <mat-label>Category</mat-label>
-      <mat-select name="category" [(ngModel)]="expense.value.categoryKey" name="categoryKey" required>
+      <mat-select name="category" [(ngModel)]="expense?.value.categoryKey" name="categoryKey" required>
         <mat-option *ngFor="let category of categories" [value]="category.key">
           {{category.value.name}}
-        </mat-option>
-      </mat-select>
+    </mat-option>
+    </mat-select>
     </mat-form-field>
     <div class="category-add-button">
       <button mat-mini-fab color="primary" aria-label="Add category" (click)="onAddCategoryClick()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
-  </div>
-  <mat-form-field appearance="outline">
-    <mat-label>Amount</mat-label>
-    <input matInput type="number" class="example-right-align" [(ngModel)]="expense.value.amount" name="ammout" required placeholder="Amount">
-    <span matPrefix>$&nbsp;</span>
-    <span matSuffix>.00</span>
-  </mat-form-field>
-  <div>
-    <button mat-stroked-button (click)="onCancelClick()">Cancel</button>
-    <button mat-raised-button color="primary" class="save-button" type="submit" >Save</button>
-  </div>
-</form>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" class="example-right-align" [(ngModel)]="expense?.value.amount" name="ammout"
+        required placeholder="Amount">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+    </mat-form-field>
+    <div>
+      <button mat-stroked-button (click)="onCancelClick()">Cancel</button>
+      <button mat-raised-button color="primary" class="save-button" type="submit">Save</button>
+    </div>
+    </form>

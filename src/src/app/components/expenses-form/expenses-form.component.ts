@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
-import { Observable } from 'rxjs';
 import { Category } from 'src/app/models/category';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoriesFormComponent } from '../categories-form/categories-form.component';
 import { Expense } from 'src/app/models/expense';
 import { KeyValue } from '@angular/common';
-import { take, map, filter, mergeMap, tap } from 'rxjs/operators';
+import { take, map, mergeMap } from 'rxjs/operators';
 import { ExpenseService } from 'src/app/services/expenses.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ThrowStmt } from '@angular/compiler';
+import { of, zip } from 'rxjs';
+
 
 @Component({
   selector: 'app-expenses-form',
@@ -17,6 +17,8 @@ import { ThrowStmt } from '@angular/compiler';
   styleUrls: ['./expenses-form.component.css']
 })
 export class ExpensesFormComponent implements OnInit {
+
+  loadingData: boolean;
 
   categories: Array<KeyValue<string, Category>>;
 
@@ -31,29 +33,27 @@ export class ExpensesFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.fillCategoryArray();
-    this.expense = {
-      key: '',
-      value: {
-        date: null,
-        description: '',
-        categoryKey: '',
-        amount: null
-      }
-    };
+    this.loadingData = true;
 
-    this.route.paramMap
+    const loadCategories$ = this.categoryService.getAll();
+
+    const loadExpense$ = this.route.paramMap
       .pipe(
         map(p => p.get('key')),
-        filter(k => k !== null),
-      ).subscribe(
-        key => {
-          this.expenseService.getByKey(key).subscribe(expense => {
-            this.expense.key = key;
-            this.expense.value = expense;
-          });
-        });
+        mergeMap(key => {
+          if (key && key !== '') {
+            return this.expenseService.getByKey(key);
+          } else {
+            return of({ key: '', value: { date: null, description: '', categoryKey: '', amount: null } });
+          }
+        })
+      );
 
+
+    zip(loadCategories$, loadExpense$).subscribe(() => this.loadingData = false);
+
+    loadCategories$.subscribe(c => this.categories = c);
+    loadExpense$.subscribe(e => this.expense = e);
   }
 
 
@@ -87,7 +87,7 @@ export class ExpensesFormComponent implements OnInit {
 
 
   fillCategoryArray() {
-    this.categoryService.getAll().subscribe(c => this.categories = c);
+    return this.categoryService.getAll().subscribe(c => this.categories = c);
   }
 
   onCancelClick() {

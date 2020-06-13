@@ -29,7 +29,12 @@ export class ExpenseService {
       .doc<Expense>(key)
       .get()
       .pipe(
-        map(c => this.mapToExpenseObject(c))
+        map(c => {
+          return {
+            key,
+            value: this.mapToExpenseObject(c)
+          };
+        })
       );
   }
 
@@ -42,7 +47,7 @@ export class ExpenseService {
       );
   }
 
-  private mapToExpenseArray(c: firestore.QuerySnapshot<firestore.DocumentData>) {
+  private mapToExpenseArray(c: firestore.QuerySnapshot<firestore.DocumentData>): Array<KeyValue<string, Expense>> {
     const response = Array<KeyValue<string, Expense>>();
     c.docs.forEach((data) => {
       response.push({
@@ -53,7 +58,7 @@ export class ExpenseService {
     return response;
   }
 
-  private mapToExpenseObject(d: firestore.DocumentData) {
+  private mapToExpenseObject(d: firestore.DocumentData): Expense {
     return {
       amount: d.data().amount,
       categoryKey: d.data().categoryKey,
