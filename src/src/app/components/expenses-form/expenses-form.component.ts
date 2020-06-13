@@ -44,7 +44,7 @@ export class ExpensesFormComponent implements OnInit {
           if (key && key !== '') {
             return this.expenseService.getByKey(key);
           } else {
-            return of({ key: '', value: { date: null, description: '', categoryKey: '', amount: null } });
+            return of({ key: '', value: { date: new Date(), description: '', categoryKey: '', amount: null } });
           }
         })
       );
@@ -65,7 +65,7 @@ export class ExpensesFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe((savedCategory) => {
       if (savedCategory && savedCategory.length !== 0) {
         this.expense.value.categoryKey = savedCategory;
-        this.fillCategoryArray();
+        this.categoryService.getAll().subscribe(c => this.categories = c);
       }
     });
   }
@@ -82,12 +82,6 @@ export class ExpensesFormComponent implements OnInit {
         });
       }
     }
-  }
-
-
-
-  fillCategoryArray() {
-    return this.categoryService.getAll().subscribe(c => this.categories = c);
   }
 
   onCancelClick() {
