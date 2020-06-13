@@ -2,8 +2,8 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport role='dialog' mode='over' opened='false'>
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Expenses</a>
-      <a mat-list-item href="#/new">New</a>
+      <a mat-list-item href="#" (click)="drawer.toggle()">Expenses</a>
+      <a mat-list-item href="#/new" (click)="drawer.toggle()">New</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
