@@ -23,7 +23,7 @@
     </mat-select>
     </mat-form-field>
     <div class="category-add-button">
-      <button mat-mini-fab color="primary" aria-label="Add category" (click)="onAddCategoryClick()">
+      <button mat-mini-fab color="primary" type="button" aria-label="Add category" (click)="onAddCategoryClick()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -36,7 +36,7 @@
       <span matSuffix>.00</span>
     </mat-form-field>
     <div>
-      <button mat-stroked-button (click)="onCancelClick()">Cancel</button>
+      <button mat-stroked-button type="button" (click)="onCancelClick()">Cancel</button>
       <button mat-raised-button color="primary" class="save-button" type="submit">Save</button>
     </div>
     </form>
