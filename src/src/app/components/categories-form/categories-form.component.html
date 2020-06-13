@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>Add category</h1>
 <div mat-dialog-content>
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="category.value.name">
+    <input matInput [(ngModel)]="category.value.name" required>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

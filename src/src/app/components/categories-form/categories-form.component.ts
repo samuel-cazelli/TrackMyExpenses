@@ -24,12 +24,17 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   onSaveClick() {
+    if (this.category.value.name === '') {
+      return;
+    }
     if (!this.category.key || this.category.key.length === 0) {
       this.categoryService.add(this.category.value).pipe(take(1)).subscribe(c => {
         this.dialogRef.close(c.id);
       });
     } else {
-      this.categoryService.update(this.category.key, this.category.value).subscribe(c => this.dialogRef.close(c));
+      this.categoryService.update(this.category.key, this.category.value).subscribe(c =>
+        this.dialogRef.close(c)
+      );
     }
   }
 
