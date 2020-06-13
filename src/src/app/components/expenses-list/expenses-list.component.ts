@@ -8,6 +8,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
 import { KeyValue } from '@angular/common';
 import { trigger, state, transition, animate, style } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-expenses-list',
@@ -54,6 +55,7 @@ export class ExpensesListComponent implements OnInit {
   constructor(
     private expenseService: ExpenseService,
     private categoryService: CategoryService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -135,5 +137,8 @@ export class ExpensesListComponent implements OnInit {
     return new Date(date.getFullYear(), date.getMonth() + offset, 1);
   }
 
+  clickEditExpense(key: string){
+    this.router.navigate(['edit', key]);
+  }
 
 }

@@ -23,41 +23,43 @@ export class ExpenseService {
     return from(this.db.collection<Expense>('expenses').doc(key).update(expense));
   }
 
-  /*getByKey(key: string) {
-    return this.db.collection<Expense>('expenses').doc<Expense>(key).get();
-  }*/
-
-  /*getAll(): Observable<Expense[]> {
-    return this.db.collection('categories')
+  getByKey(key: string) {
+    return this.db
+      .collection<Expense>('expenses')
+      .doc<Expense>(key)
       .get()
       .pipe(
-        map(c => this.mapExpenseArray(c))
+        map(c => this.mapToExpenseObject(c))
       );
-  }*/
+  }
 
   getByStartEndDate(start: Date, end: Date): Observable<Array<KeyValue<string, Expense>>> {
     return this.db.collection('expenses',
       ref => ref.where('date', '>=', start).where('date', '<', end)
     ).get()
       .pipe(
-        map(c => this.mapExpenseArray(c))
+        map(c => this.mapToExpenseArray(c))
       );
   }
 
-  private mapExpenseArray(c: firestore.QuerySnapshot<firestore.DocumentData>) {
+  private mapToExpenseArray(c: firestore.QuerySnapshot<firestore.DocumentData>) {
     const response = Array<KeyValue<string, Expense>>();
     c.docs.forEach((data) => {
       response.push({
         key: data.id,
-        value: {
-          amount: data.data().amount,
-          categoryKey: data.data().categoryKey,
-          date: data.data().date.toDate(),
-          description: data.data().description
-        }
+        value: this.mapToExpenseObject(data)
       });
     });
     return response;
+  }
+
+  private mapToExpenseObject(d: firestore.DocumentData) {
+    return {
+      amount: d.data().amount,
+      categoryKey: d.data().categoryKey,
+      date: d.data().date.toDate(),
+      description: d.data().description
+    };
   }
 
 }

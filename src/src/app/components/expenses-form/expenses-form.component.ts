@@ -6,9 +6,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoriesFormComponent } from '../categories-form/categories-form.component';
 import { Expense } from 'src/app/models/expense';
 import { KeyValue } from '@angular/common';
-import { take } from 'rxjs/operators';
+import { take, map, filter, mergeMap, tap } from 'rxjs/operators';
 import { ExpenseService } from 'src/app/services/expenses.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-expenses-form',
@@ -26,6 +27,7 @@ export class ExpensesFormComponent implements OnInit {
     private expenseService: ExpenseService,
     public dialog: MatDialog,
     private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -39,6 +41,19 @@ export class ExpensesFormComponent implements OnInit {
         amount: 0
       }
     };
+
+    this.route.paramMap
+      .pipe(
+        map(p => p.get('key')),
+        filter(k => k !== null),
+      ).subscribe(
+        key => {
+          this.expenseService.getByKey(key).subscribe(expense => {
+            this.expense.key = key;
+            this.expense.value = expense;
+          });
+        });
+
   }
 
 

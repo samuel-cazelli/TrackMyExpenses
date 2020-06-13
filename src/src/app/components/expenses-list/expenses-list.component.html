@@ -19,10 +19,10 @@
             <span class="expense-group-name">{{ category.value.name }}</span>
             <span class="expense-group-value">{{ category.value.amount | currency }}</span>
             <div class="expense-details" *ngIf="category.value.visible" [@showHide]>
-                <div class="expense-details-item" *ngFor="let expense of category.value.expenses">
-                    <span class="expense-details-date">{{ expense.value.date | date:'yyyy/MM/dd'}}</span>
-                    <span class="expense-details-name">{{ expense.value.description }}</span>
+                <div class="expense-details-item" *ngFor="let expense of category.value.expenses" (click)="clickEditExpense(expense.key)">
                     <span class="expense-details-value">{{ expense.value.amount | currency }}</span>
+                    <span class="expense-details-name">{{ expense.value.description }}</span>
+                    <span class="expense-details-date">{{ expense.value.date | date:'dd MMM'}}</span>
                 </div>
             </div>
         </div>

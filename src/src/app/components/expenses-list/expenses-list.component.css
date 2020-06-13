@@ -40,16 +40,26 @@
     width: 100%;
     padding-left: 10px;
 }
-.expense-details-name{
-    padding-left: 10px;
-}
+
+
 .expense-details-item{
     display: flex;
     font-size: 14px;
     margin-top: 5px;
     padding: 5px;
 }
+.expense-details-item:hover{
+    background-color:#efefef;
+    border-radius: 4px;
+}
+
 .expense-details-value{
+    font-size: 16px;
+}
+.expense-details-name{
+    padding-left: 10px;
+}
+.expense-details-date{
     margin-left: auto;
 }
 

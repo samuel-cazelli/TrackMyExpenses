@@ -7,6 +7,7 @@ import { ExpensesFormComponent } from './components/expenses-form/expenses-form.
 const routes: Routes = [
   { path: '', component: ExpensesListComponent },
   { path: 'new', component: ExpensesFormComponent },
+  { path: 'edit/:key', component: ExpensesFormComponent },
 ];
 
 @NgModule({
